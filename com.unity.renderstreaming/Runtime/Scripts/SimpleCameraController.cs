@@ -165,13 +165,6 @@ namespace Unity.RenderStreaming
         {
             m_TargetCameraState.SetFromTransform(transform);
             m_InterpolatingCameraState.SetFromTransform(transform);
-
-            RenderStreaming.Instance?.AddController(this);
-        }
-
-        void OnDisable()
-        {
-            RenderStreaming.Instance?.RemoveController(this);
         }
 
 //---------------------------------------------------------------------------------------------------------------------
