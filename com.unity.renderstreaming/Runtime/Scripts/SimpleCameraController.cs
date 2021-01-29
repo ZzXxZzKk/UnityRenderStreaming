@@ -260,7 +260,7 @@ namespace Unity.RenderStreaming
 
             var touches = m_screen.GetTouches();
 
-            // Rotation 
+            // Rotation
             if (IsMouseDragged(m_mouse,false))
             {
                 UpdateTargetCameraStateFromInput(m_mouse.delta.ReadValue());
@@ -274,10 +274,10 @@ namespace Unity.RenderStreaming
             {
                 var v = m_gyroscpe.angularVelocity.ReadValue();
                 m_TargetCameraState.yaw += v.x;
-                m_TargetCameraState.pitch += v.y;
+                m_TargetCameraState.pitch -= v.y;
                 m_TargetCameraState.roll += v.z;
             }
-            
+
             // Rotation from joystick
             if(m_gamepad?.leftStick != null)
                 UpdateTargetCameraStateFromInput(m_gamepad.leftStick.ReadValue());
@@ -318,7 +318,7 @@ namespace Unity.RenderStreaming
 
             if (Screen.safeArea.Contains(m.position.ReadValue())) {
                 //check left/right click
-                if ((useLeftButton && m.leftButton.isPressed) || (!useLeftButton && m.rightButton.isPressed)) {               
+                if ((useLeftButton && m.leftButton.isPressed) || (!useLeftButton && m.rightButton.isPressed)) {
                     return true;
                 }
             }
