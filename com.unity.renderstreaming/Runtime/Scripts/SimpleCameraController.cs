@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 namespace Unity.RenderStreaming
 {
@@ -131,6 +132,7 @@ namespace Unity.RenderStreaming
         private Keyboard m_keyboard;
         private Mouse m_mouse;
         private Touchscreen m_screen;
+        private Gyroscope m_gyroscpe;
 
         public void SetInput(IInput input)
         {
@@ -157,6 +159,9 @@ namespace Unity.RenderStreaming
                     return;
                 case Gamepad pad:
                     m_gamepad = pad;
+                    return;
+                case Gyroscope gyroscope:
+                    m_gyroscpe = gyroscope;
                     return;
             }
         }
@@ -264,6 +269,13 @@ namespace Unity.RenderStreaming
             {
                 var activeTouches = touches.ToArray();
                 UpdateTargetCameraStateFromInput(activeTouches[0].delta);
+            }
+            else if(m_gyroscpe != null && m_gyroscpe.enabled)
+            {
+                var v = m_gyroscpe.angularVelocity.ReadValue();
+                m_TargetCameraState.yaw += v.x;
+                m_TargetCameraState.pitch += v.y;
+                m_TargetCameraState.roll += v.z;
             }
             
             // Rotation from joystick

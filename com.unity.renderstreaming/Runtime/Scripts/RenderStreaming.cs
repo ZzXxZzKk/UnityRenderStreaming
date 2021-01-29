@@ -32,6 +32,7 @@ namespace Unity.RenderStreaming
         [SerializeField]
         private List<SignalingHandlerBase> handlers = new List<SignalingHandlerBase>();
 
+        [SerializeField] private bool runOnAwake = true;
 #pragma warning restore 0649
 
         private SynchronizationContext m_mainThreadContext;
@@ -39,6 +40,13 @@ namespace Unity.RenderStreaming
         private SignalingEventProvider provider;
 
         public void Awake()
+        {
+            if (!runOnAwake)
+                return;
+            Run();
+        }
+
+        public void Run()
         {
             RTCConfiguration conf = new RTCConfiguration {iceServers = iceServers};
             var encoderType = hardwareEncoderSupport ? EncoderType.Hardware : EncoderType.Software;
@@ -69,10 +77,10 @@ namespace Unity.RenderStreaming
 
         public void OnDestroy()
         {
-            instance.Dispose();
+            instance?.Dispose();
 
             EnhancedTouchSupport.Disable();
-            RemoteInputReceiver.Dispose();
+            //RemoteInputReceiver.Dispose();
             m_mainThreadContext = null;
         }
     }

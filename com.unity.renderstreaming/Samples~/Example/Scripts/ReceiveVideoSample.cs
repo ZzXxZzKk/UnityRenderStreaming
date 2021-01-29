@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +18,15 @@ namespace Unity.RenderStreaming
         void Awake()
         {
             sendOfferButton.onClick.AddListener(SendOffer);
-            connectionIdInput.onValueChanged.AddListener(input => connectionId = input);
+            if(connectionIdInput != null)
+                connectionIdInput.onValueChanged.AddListener(input => connectionId = input);
             receiveVideoViewer.OnUpdateReceiveTexture += texture => remoteVideoImage.texture = texture;
         }
 
         private void SendOffer()
         {
+            if(connectionId != null)
+               connectionId = System.Guid.NewGuid().ToString("N");
             connection.CreateConnection(connectionId, true);
         }
     }
