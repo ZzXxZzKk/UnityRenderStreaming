@@ -1244,7 +1244,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1915034400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40415cd437dc22a419fe9f2663390a2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 045786cf504bd7347842d6948241cbd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   urlSignaling: ws://localhost
@@ -1259,6 +1259,7 @@ MonoBehaviour:
   hardwareEncoderSupport: 0
   handlers:
   - {fileID: 1915034405}
+  runOnAwake: 1
 --- !u!224 &1915034403
 RectTransform:
   m_ObjectHideFlags: 0

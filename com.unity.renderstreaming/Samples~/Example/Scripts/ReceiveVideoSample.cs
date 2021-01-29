@@ -25,7 +25,7 @@ namespace Unity.RenderStreaming
 
         private void SendOffer()
         {
-            if(connectionId != null)
+            if(connectionId == null)
                connectionId = System.Guid.NewGuid().ToString("N");
             connection.CreateConnection(connectionId, true);
         }
