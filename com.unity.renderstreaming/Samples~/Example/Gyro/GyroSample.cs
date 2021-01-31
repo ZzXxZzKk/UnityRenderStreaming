@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-
+using UnityEngine.InputSystem.Controls;
 using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 namespace Unity.RenderStreaming
 {
     public class GyroSample : MonoBehaviour
     {
-    #pragma warning disable 0649
+#pragma warning disable 0649
             [SerializeField] private Button sendOfferButton;
             [SerializeField] private RawImage remoteVideoImage;
             [SerializeField] private ReceiveVideoViewer receiveVideoViewer;
@@ -18,8 +18,8 @@ namespace Unity.RenderStreaming
             [SerializeField] private Text textVelocityX;
             [SerializeField] private Text textVelocityY;
             [SerializeField] private Text textVelocityZ;
-
-    #pragma warning restore 0649
+            [SerializeField] private InputAction vector3Action;
+#pragma warning restore 0649
 
         void Awake()
         {
@@ -31,13 +31,32 @@ namespace Unity.RenderStreaming
             receiveVideoViewer.OnUpdateReceiveTexture += texture => remoteVideoImage.texture = texture;
         }
 
-        void Update()
+
+        void OnEnable()
         {
-            var _value = Gyroscope.current?.angularVelocity.ReadValue();
-            var value = _value.GetValueOrDefault();
-            textVelocityX.text = value.x.ToString("f2");
-            textVelocityY.text = value.y.ToString("f2");
-            textVelocityZ.text = value.z.ToString("f2");
+            vector3Action.Enable();
+            vector3Action.performed += UpdateVector3;
+            vector3Action.started += UpdateVector3;
+            vector3Action.canceled += UpdateVector3;
+        }
+
+        void OnDisable()
+        {
+            vector3Action.Disable();
+            vector3Action.performed -= UpdateVector3;
+            vector3Action.started -= UpdateVector3;
+            vector3Action.canceled -= UpdateVector3;
+        }
+
+        private void UpdateVector3(InputAction.CallbackContext context)
+        {
+            if (context.control is Vector3Control control)
+            {
+                Vector3 value = control.ReadValue();
+                textVelocityX.text = value.x.ToString("f2");
+                textVelocityX.text = value.y.ToString("f2");
+                textVelocityX.text = value.z.ToString("f2");
+            }
         }
 
         void SendOffer()

@@ -1700,3 +1700,19 @@ MonoBehaviour:
   textVelocityX: {fileID: 545070959}
   textVelocityY: {fileID: 289531841}
   textVelocityZ: {fileID: 523210254}
+  vector3Action:
+    m_Name: Vector 3
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4b140a76-8be4-4f55-af64-554febe2d2de
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: f91d3dff-6440-4cb7-bee3-90fb774f20e9
+      m_Path: <Gyroscope>/angularVelocity
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Vector 3
+      m_Flags: 0
