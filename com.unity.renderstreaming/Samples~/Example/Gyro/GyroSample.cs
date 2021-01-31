@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
@@ -54,8 +52,8 @@ namespace Unity.RenderStreaming
             {
                 Vector3 value = control.ReadValue();
                 textVelocityX.text = value.x.ToString("f2");
-                textVelocityX.text = value.y.ToString("f2");
-                textVelocityX.text = value.z.ToString("f2");
+                textVelocityY.text = value.y.ToString("f2");
+                textVelocityZ.text = value.z.ToString("f2");
             }
         }
 

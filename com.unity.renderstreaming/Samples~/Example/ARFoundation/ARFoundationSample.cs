@@ -1,0 +1,91 @@
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+
+namespace Unity.RenderStreaming
+{
+    public class ARFoundationSample : MonoBehaviour
+    {
+#pragma warning disable 0649
+        [SerializeField] private Button sendOfferButton;
+        [SerializeField] private RawImage remoteVideoImage;
+        [SerializeField] private ReceiveVideoViewer receiveVideoViewer;
+        [SerializeField] private SingleConnection connection;
+        [SerializeField] private Text textPositionX;
+        [SerializeField] private Text textPositionY;
+        [SerializeField] private Text textPositionZ;
+        [SerializeField] private Text textQuaternionX;
+        [SerializeField] private Text textQuaternionY;
+        [SerializeField] private Text textQuaternionZ;
+        [SerializeField] private InputAction positionAction;
+        [SerializeField] private InputAction quaternionAction;
+
+#pragma warning restore 0649
+
+        void Awake()
+        {
+            //if(Gyroscope.current != null)
+            //    InputSystem.EnableDevice(Gyroscope.current);
+            //else
+            //    Debug.LogError("Gyroscope is not supported on this device.");
+            sendOfferButton.onClick.AddListener(SendOffer);
+            receiveVideoViewer.OnUpdateReceiveTexture += texture => remoteVideoImage.texture = texture;
+        }
+
+
+        void OnEnable()
+        {
+            positionAction.Enable();
+            positionAction.performed += UpdatePosition;
+            positionAction.started += UpdatePosition;
+            positionAction.canceled += UpdatePosition;
+
+            quaternionAction.Enable();
+            quaternionAction.performed += UpdateQuaternion;
+            quaternionAction.started += UpdateQuaternion;
+            quaternionAction.canceled += UpdateQuaternion;
+        }
+
+        void OnDisable()
+        {
+            positionAction.Disable();
+            positionAction.performed -= UpdatePosition;
+            positionAction.started -= UpdatePosition;
+            positionAction.canceled -= UpdatePosition;
+
+            quaternionAction.Enable();
+            quaternionAction.performed -= UpdateQuaternion;
+            quaternionAction.started -= UpdateQuaternion;
+            quaternionAction.canceled -= UpdateQuaternion;
+        }
+
+        private void UpdatePosition(InputAction.CallbackContext context)
+        {
+            if (context.control is Vector3Control control)
+            {
+                Vector3 value = control.ReadValue();
+                textPositionX.text = value.x.ToString("f2");
+                textPositionY.text = value.y.ToString("f2");
+                textPositionZ.text = value.z.ToString("f2");
+            }
+        }
+
+        private void UpdateQuaternion(InputAction.CallbackContext context)
+        {
+            if (context.control is QuaternionControl control)
+            {
+                Quaternion value = control.ReadValue();
+                textQuaternionX.text = value.eulerAngles.x.ToString("f2");
+                textQuaternionY.text = value.eulerAngles.y.ToString("f2");
+                textQuaternionZ.text = value.eulerAngles.z.ToString("f2");
+            }
+        }
+
+        void SendOffer()
+        {
+            var connectionId = System.Guid.NewGuid().ToString("N");
+            connection.CreateConnection(connectionId, true);
+        }
+    }
+}
