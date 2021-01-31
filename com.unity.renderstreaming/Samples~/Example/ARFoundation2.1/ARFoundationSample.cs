@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.XR.ARFoundation;
 
 namespace Unity.RenderStreaming
 {
@@ -12,6 +14,7 @@ namespace Unity.RenderStreaming
         [SerializeField] private RawImage remoteVideoImage;
         [SerializeField] private ReceiveVideoViewer receiveVideoViewer;
         [SerializeField] private SingleConnection connection;
+        [SerializeField] private ARSession session;
         [SerializeField] private Text textPositionX;
         [SerializeField] private Text textPositionY;
         [SerializeField] private Text textPositionZ;
@@ -20,17 +23,32 @@ namespace Unity.RenderStreaming
         [SerializeField] private Text textQuaternionZ;
         [SerializeField] private InputAction positionAction;
         [SerializeField] private InputAction quaternionAction;
-
 #pragma warning restore 0649
 
         void Awake()
         {
-            //if(Gyroscope.current != null)
-            //    InputSystem.EnableDevice(Gyroscope.current);
-            //else
-            //    Debug.LogError("Gyroscope is not supported on this device.");
             sendOfferButton.onClick.AddListener(SendOffer);
             receiveVideoViewer.OnUpdateReceiveTexture += texture => remoteVideoImage.texture = texture;
+        }
+
+        IEnumerator Start()
+        {
+            if ((ARSession.state == ARSessionState.None ) ||
+                (ARSession.state == ARSessionState.CheckingAvailability))
+            {
+                yield return ARSession.CheckAvailability();
+            }
+
+            if (ARSession.state == ARSessionState.Unsupported)
+            {
+                // Start some fallback experience for unsupported devices
+                Debug.LogError("AR foundation is not supported on this device.");
+            }
+            else
+            {
+                // Start the AR session
+                session.enabled = true;
+            }
         }
 
 
