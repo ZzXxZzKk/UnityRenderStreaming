@@ -2547,7 +2547,15 @@ MonoBehaviour:
     m_Id: b2a5299f-cdb7-4aec-91b4-1a37cc32cef3
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 087a44e1-1eae-4a2b-b3d1-b513f72a20e6
+      m_Path: <HandheldARInputDevice>/devicePosition
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Position
+      m_Flags: 0
   quaternionAction:
     m_Name: Quaternion
     m_Type: 0
@@ -2555,7 +2563,15 @@ MonoBehaviour:
     m_Id: 563a264f-42fd-4fed-ac02-6f37764f123b
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 8d9aa61a-e1be-45f8-b882-0f20a4416bbd
+      m_Path: <HandheldARInputDevice>/deviceRotation
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Quaternion
+      m_Flags: 0
 --- !u!114 &1915034405
 MonoBehaviour:
   m_ObjectHideFlags: 0
