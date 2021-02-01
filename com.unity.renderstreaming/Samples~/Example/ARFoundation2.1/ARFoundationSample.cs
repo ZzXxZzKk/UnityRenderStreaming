@@ -22,7 +22,12 @@ namespace Unity.RenderStreaming
         [SerializeField] private Text textQuaternionX;
         [SerializeField] private Text textQuaternionY;
         [SerializeField] private Text textQuaternionZ;
+
+        /// note: Set `<XRInputV1::ARKit>/deviceposition` into binding path on the inspector
+        /// if you want to use a device position with AR Foundation 2.1
         [SerializeField] private InputAction positionAction;
+        /// note: Set `<XRInputV1::ARKit>/devicerotation` into binding path on the inspector
+        /// if you want to use a device rotation with AR Foundation 2.1
         [SerializeField] private InputAction quaternionAction;
 #pragma warning restore 0649
 
@@ -35,7 +40,7 @@ namespace Unity.RenderStreaming
 
             startButton.gameObject.SetActive(true);
             stopButton.gameObject.SetActive(false);
-            
+
             receiveVideoViewer.OnUpdateReceiveTexture += texture => remoteVideoImage.texture = texture;
         }
 

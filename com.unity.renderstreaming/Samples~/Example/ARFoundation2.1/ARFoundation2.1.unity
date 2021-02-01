@@ -2978,7 +2978,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 087a44e1-1eae-4a2b-b3d1-b513f72a20e6
-      m_Path: <HandheldARInputDevice>/devicePosition
+      m_Path: <XRInputV1::ARKit>/deviceposition
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -2994,7 +2994,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 8d9aa61a-e1be-45f8-b882-0f20a4416bbd
-      m_Path: <HandheldARInputDevice>/deviceRotation
+      m_Path: <XRInputV1::ARKit>/devicerotation
       m_Interactions: 
       m_Processors: 
       m_Groups: 
