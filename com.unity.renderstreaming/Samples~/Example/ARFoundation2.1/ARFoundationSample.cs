@@ -10,7 +10,8 @@ namespace Unity.RenderStreaming
     public class ARFoundationSample : MonoBehaviour
     {
 #pragma warning disable 0649
-        [SerializeField] private Button sendOfferButton;
+        [SerializeField] private Button startButton;
+        [SerializeField] private Button stopButton;
         [SerializeField] private RawImage remoteVideoImage;
         [SerializeField] private ReceiveVideoViewer receiveVideoViewer;
         [SerializeField] private SingleConnection connection;
@@ -25,9 +26,16 @@ namespace Unity.RenderStreaming
         [SerializeField] private InputAction quaternionAction;
 #pragma warning restore 0649
 
+        private string _connectionId;
+
         void Awake()
         {
-            sendOfferButton.onClick.AddListener(SendOffer);
+            startButton.onClick.AddListener(CreateConnection);
+            stopButton.onClick.AddListener(DeleteConnection);
+
+            startButton.gameObject.SetActive(true);
+            stopButton.gameObject.SetActive(false);
+            
             receiveVideoViewer.OnUpdateReceiveTexture += texture => remoteVideoImage.texture = texture;
         }
 
@@ -100,10 +108,21 @@ namespace Unity.RenderStreaming
             }
         }
 
-        void SendOffer()
+        void CreateConnection()
         {
-            var connectionId = System.Guid.NewGuid().ToString("N");
-            connection.CreateConnection(connectionId, true);
+            _connectionId = System.Guid.NewGuid().ToString("N");
+            connection.CreateConnection(_connectionId, true);
+
+            startButton.gameObject.SetActive(false);
+            stopButton.gameObject.SetActive(true);
+        }
+        void DeleteConnection()
+        {
+            connection.DeleteConnection(_connectionId);
+            _connectionId = null;
+
+            startButton.gameObject.SetActive(true);
+            stopButton.gameObject.SetActive(false);
         }
     }
 }
